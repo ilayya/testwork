@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+html, body{
+	background-color: #1C6565;
+	position: relative;
+	width: 1024px;
+	height: 768px;
+	margin:0 auto;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	color: #000000;
+}
