@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +25,15 @@ export class AppComponent {
   helmetChoosed:boolean = false;
 
     constructor(private http:HttpClient){
-      this.http.get("/assets/hero.json")
+
+    this.http.get("/assets/hero.json")
         .subscribe((data) => {
+
+          data.equipment.helmets.splice(0,0,{id:'0',name:"Нет",	price: "0",	armor: "0",	attack: "0",health: "0", img:""});
+          data.equipment.chests.splice(0,0,{id:'0',name:"Нет",	price: "0",	armor: "0",	attack: "0",health: "0", img:""});
+          data.equipment.gloves.splice(0,0,{id:'0',name:"Нет",	price: "0",	armor: "0",	attack: "0",health: "0", img:""});
+          data.equipment.boots.splice(0,0,{id:'0',name:"Нет",	price: "0",	armor: "0",	attack: "0",health: "0", img:""});
+          data.equipment.swords.splice(0,0,{id:'0',name:"Нет",	price: "0",	armor: "0",	attack: "0",health: "0", img:""});
           this.hero = data;
           this.name = this.hero.person.name;
           this.health = this.hero.person.health;
@@ -38,6 +45,8 @@ export class AppComponent {
           Pw.hero.attack = this.hero.person.attack;
           Pw.hero.price = 0;
         });
+
+
     }
 
     ngOnInit(){
@@ -45,6 +54,10 @@ export class AppComponent {
       this.health = this.hero.person.health;
       this.armor = this.hero.person.armor;
       this.attack = this.hero.person.attack;
+
+
+      console.log(this.hero.equipment);
+
     }
 
     refresh(){
@@ -59,7 +72,15 @@ export class AppComponent {
 
     if (this.helmetChoosed == false){
       this.backgroundImage = this.hero.person["alt-img"];
+      this.helmetChoosed = true;
+    } else {
+      if (this.hero.equipment.helmets[index].name == "Нет"){
+        this.backgroundImage = this.hero.person.img;
+        this.helmetChoosed = false;
+      }
     }
+
+    console.log(this.backgroundImage);
 
     Pw.helmets.health = this.hero.equipment.helmets[index].health;
     Pw.helmets.armor = this.hero.equipment.helmets[index].armor;
